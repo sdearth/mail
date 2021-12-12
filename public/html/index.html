@@ -1,0 +1,33 @@
+<head>
+    <title>E-mail</title>
+</head>
+<body>
+    <h1>Hello world!</h1>
+    <p id="demo">A Paragraph</p>
+    <button type="button" onclick="myfunction()">Try it</button>
+
+    <script>
+        document.getElementById("demo").innerHTML=window.location.href
+        function myfunction() {
+            //set up a POST request to send the resume to the backend API
+            var url = window.location.href + "handle";
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url)
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            //handle the completed POST request
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    //update document with status of email POST request
+                    document.getElementById("demo").innerHTML=xhr.status + " " + xhr.responseText
+                }
+            }
+
+            var data = `{"email": "sdearth@gmail.com", "resume": "<html><body>this is a resume</body></html>"}`;
+            
+            xhr.send(data);
+        }
+    </script>
+
+</body>

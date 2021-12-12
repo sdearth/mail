@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: email-app
+  template:
+    metadata:
+      labels:
+        app: email-app
+    spec:
+      containers: 
+        - name: email-node
+          image: sdearth/email-node-app:3
+          env:
+            - name: USER
+              valueFrom:
+                secretKeyRef:
+                  name: mail-cred
+                  key: USER
+            - name: PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mail-cred
+                  key: PASS
